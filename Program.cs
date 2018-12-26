@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Media;
 
 namespace SnakeGame
 {
@@ -24,7 +25,13 @@ namespace SnakeGame
 		public static bool loss = false;
 		public static char lastPressed;
 
-		
+		static SoundPlayer MusicPlayer = new SoundPlayer((TheSnakeGame.Properties.Resources.Unity));
+
+		static void PlayMusic()
+		{
+			Thread.Sleep(500);
+			MusicPlayer.PlayLooping();
+		}
 
 
 		static void Processes()
@@ -53,9 +60,8 @@ namespace SnakeGame
 			{
 
 
-				for (int i = 0; i <= 1000; i++)
-				{
-
+			
+				
 
 					n = Console.ReadKey();
 					while (n.Key == ConsoleKey.D)             //max(x) = 120 && max(y) = 28;
@@ -134,7 +140,7 @@ namespace SnakeGame
 							Console.ForegroundColor = ConsoleColor.DarkRed;
 							Console.SetCursorPosition(xApple, yApple);
 							Console.WriteLine("@");
-							score = score + 10;
+							score = score + 15;
 						}
 						/*if((xHead == prevXHead && y == prevYHead) || (xHead == prevXHead-1 && y == prevYHead) || (xHead == prevXHead-2 && yHead == prevYHead) || (xHead == prevXHead-3 && yHead == prevYHead))
                         {
@@ -253,7 +259,7 @@ namespace SnakeGame
 							Console.SetCursorPosition(0, 0);
 							Console.WriteLine("Score:" + score);
 						}
-						Thread.Sleep(100);
+						Thread.Sleep(150);
 						if (Console.KeyAvailable)
 						{
 							break;
@@ -452,7 +458,7 @@ namespace SnakeGame
 							Console.WriteLine("Score:" + score);
 						}
 
-						Thread.Sleep(100);
+						Thread.Sleep(150);
 						if (Console.KeyAvailable)
 						{
 							break;
@@ -476,18 +482,12 @@ namespace SnakeGame
 
 
 			}
-		}
-
-
-		static void Apple()
-		{
-
-
-		}
-
+		
 
 		static void Main()
 		{
+			Thread MusicWorker = new Thread(PlayMusic);
+			MusicWorker.Start();
 			Console.ForegroundColor = ConsoleColor.DarkRed;
 			Console.WriteLine("The Snake Game v0.1 by Kalin Lalov and Miro K.");
 			Console.Title = "Snake";
